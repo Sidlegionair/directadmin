@@ -1,17 +1,17 @@
 {
-  "name": "omines/directadmin",
+  "name": "sidlegionair/directadmin",
   "type": "library",
   "description": "PHP client library to manage DirectAdmin control panel servers.",
   "license": "MIT",
   "keywords": [
     "library", "php", "directadmin", "control panel", "api", "direct admin"
   ],
-  "homepage": "https://github.com/omines/directadmin",
+  "homepage": "https://github.com/sidlegionair/directadmin",
   "authors": [
     {
-      "name": "Niels Keurentjes",
-      "email": "niels.keurentjes@omines.com",
-      "homepage": "https://www.omines.nl/"
+      "name": "Floris Boers",
+      "email": "floris@live-messenger.nl",
+      "homepage": "https://github.com/sidlegionair"
     }
   ],
   "support": {

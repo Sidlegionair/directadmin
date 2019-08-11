@@ -49,9 +49,9 @@ abstract class BaseContext
      * @param array $query Optional query parameters
      * @return array The parsed and validated response
      */
-    public function invokeApiGet($command, $query = [])
+    public function invokeApiGet($command, $query = [], $allow_html_response = false)
     {
-        return $this->connection->invokeApi('GET', $command, ['query' => $query]);
+        return $this->connection->invokeApi('GET', $command, ['query' => $query], $allow_html_response);
     }
 
     /**
@@ -59,11 +59,12 @@ abstract class BaseContext
      *
      * @param string $command DirectAdmin API command to invoke
      * @param array $postParameters Optional form parameters
+     * @param boolean $allow_html_response Optional parameter to allow returning a response containing html instead of json
      * @return array The parsed and validated response
      */
-    public function invokeApiPost($command, $postParameters = [])
+    public function invokeApiPost($command, $postParameters = [], $allow_html_response = false)
     {
-        return $this->connection->invokeApi('POST', $command, ['form_params' => $postParameters]);
+        return $this->connection->invokeApi('POST', $command, ['form_params' => $postParameters], $allow_html_response);
     }
 
     /**

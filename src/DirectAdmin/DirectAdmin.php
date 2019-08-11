@@ -124,13 +124,17 @@ class DirectAdmin
      * @return array The unvalidated response
      * @throws DirectAdminException If anything went wrong on the network level
      */
-    public function invokeApi($method, $command, $options = [])
+    public function invokeApi($method, $command, $options = [], $allow_html = false)
     {
-        $result = $this->rawRequest($method, '/CMD_API_' . $command, $options);
+        $result = $this->rawRequest($method, '/CMD_API_' . $command, $options, $allow_html);
         if (!empty($result['error'])) {
             throw new DirectAdminException("$method to $command failed: $result[details] ($result[text])");
         }
-        return Conversion::sanitizeArray($result);
+        if($allow_html == true) {
+         return $result;
+        } else {
+            return Conversion::sanitizeArray($result);
+        }
     }
 
     /**
@@ -153,12 +157,14 @@ class DirectAdmin
      * @param array $options
      * @return array
      */
-    public function rawRequest($method, $uri, $options)
+    public function rawRequest($method, $uri, $options, $allow_html = false)
     {
         try {
             $response = $this->connection->request($method, $uri, $options);
-            if ($response->getHeader('Content-Type')[0] == 'text/html') {
-                throw new DirectAdminException(sprintf('DirectAdmin API returned text/html to %s %s containing "%s"', $method, $uri, strip_tags($response->getBody()->getContents())));
+            if($allow_html == false) {
+                if ($response->getHeader('Content-Type')[0] == 'text/html') {
+                    throw new DirectAdminException(sprintf('DirectAdmin API returned text/html to %s %s containing "%s"', $method, $uri, strip_tags($response->getBody()->getContents())));
+                }
             }
             $body = $response->getBody()->getContents();
             return Conversion::responseToArray($body);
