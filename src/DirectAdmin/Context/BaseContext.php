@@ -72,8 +72,13 @@ abstract class BaseContext
      * @param $uri
      * @param $options
      */
-    public function rawRequest($method, $uri, $options, $allow_html_response = false)
+    public function rawRequest($method, $uri, $options, $allow_html_response = false, $form_params = true)
     {
-        return $this->connection->rawRequest($method, $uri, ['form_params' => $options], $allow_html_response);
+        if($form_params == true) {
+            return $this->connection->rawRequest($method, $uri, ['form_params' => $options], $allow_html_response);
+        }
+        if($form_params == false) {
+            return $this->connection->rawRequest($method, $uri, $options, $allow_html_response);
+        }
     }
 }
